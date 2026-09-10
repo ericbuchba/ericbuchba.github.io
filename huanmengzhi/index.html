@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>幻梦之晓2.2英雄-版本英雄资料、技能解析与玩法攻略</title>
+<meta name="description" content="幻梦之晓2.2英雄资料站，整理幻梦之晓2.2版本英雄定位、技能机制、出装思路、对线打法与常见问题，帮助玩家快速了解版本英雄强度与上手方向。">
+<meta name="keywords" content="幻梦之晓2.2英雄,幻梦之晓2.2,幻梦之晓英雄,2.2版本英雄,英雄攻略">
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-deep:#0d0b1a;
+  --bg-panel:#161329;
+  --bg-card:#1d1936;
+  --line:#2c2750;
+  --gold:#e8c46a;
+  --gold-soft:#f5e0a8;
+  --violet:#8f7bf0;
+  --violet-dim:#5f4fb0;
+  --text:#e9e6f5;
+  --text-dim:#a49ec4;
+  --radius:14px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg-deep);
+  color:var(--text);
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+  line-height:1.75;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* ===== 顶部 ===== */
+.topbar{
+  background:linear-gradient(180deg,#1a1533 0%,#0d0b1a 100%);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(6px);
+}
+.topbar-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;height:64px;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-size:19px;font-weight:700;letter-spacing:.5px;
+  white-space:nowrap;
+}
+.logo .mark{
+  width:30px;height:30px;border-radius:9px;
+  background:linear-gradient(135deg,var(--violet),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;color:#15122a;font-weight:800;
+}
+.logo span.sub{color:var(--gold);font-weight:500;font-size:13px}
+.nav{display:flex;gap:4px;flex-wrap:wrap}
+.nav a{
+  padding:7px 13px;border-radius:8px;font-size:14.5px;color:var(--text-dim);
+  transition:.2s;
+}
+.nav a:hover{background:#221c42;color:var(--gold-soft)}
+.nav a.on{background:#241e46;color:var(--gold)}
+.menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 12px;font-size:14px}
+
+/* ===== 首屏 ===== */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 420px at 12% -10%,rgba(143,123,240,.30),transparent 65%),
+    radial-gradient(700px 380px at 92% 8%,rgba(232,196,106,.16),transparent 62%),
+    linear-gradient(180deg,#191436 0%,#0d0b1a 100%);
+  border-bottom:1px solid var(--line);
+}
+.hero-inner{
+  display:grid;grid-template-columns:1.35fr 1fr;gap:44px;
+  padding:64px 0 58px;align-items:center;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--gold-soft);
+  border:1px solid rgba(232,196,106,.4);
+  background:rgba(232,196,106,.08);
+  padding:5px 13px;border-radius:99px;margin-bottom:20px;
+}
+.hero-tag i{width:6px;height:6px;border-radius:50%;background:var(--gold);display:block}
+.hero h1{
+  font-size:40px;line-height:1.28;font-weight:800;letter-spacing:.5px;
+  margin-bottom:18px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(100deg,var(--gold) 10%,#f7ecc9 55%,var(--violet) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.lead{color:var(--text-dim);font-size:16.5px;max-width:600px;margin-bottom:26px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-block;padding:12px 26px;border-radius:10px;
+  font-size:15px;font-weight:600;transition:.22s;border:1px solid transparent;
+}
+.btn-primary{
+  background:linear-gradient(120deg,var(--violet),#6d59d6);
+  color:#fff;box-shadow:0 8px 24px -10px rgba(143,123,240,.9);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(143,123,240,1)}
+.btn-ghost{border-color:var(--line);color:var(--text-dim)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-soft)}
+
+.hero-panel{
+  background:linear-gradient(160deg,#1e1a3a,#141129);
+  border:1px solid var(--line);border-radius:18px;padding:24px;
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.9);
+}
+.hero-panel h2{
+  font-size:14px;font-weight:600;color:var(--gold);letter-spacing:1.5px;
+  margin-bottom:16px;text-transform:uppercase;
+}
+.stat-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px dashed #2a2450;font-size:14.5px}
+.stat-row:last-child{border-bottom:none}
+.stat-row span:first-child{color:var(--text-dim)}
+.stat-row span:last-child{color:var(--gold-soft);font-weight:600}
+
+/* ===== 通用区块 ===== */
+section{padding:66px 0}
+.sec-head{margin-bottom:34px;max-width:760px}
+.sec-head .kicker{
+  font-size:13px;color:var(--violet);letter-spacing:2px;font-weight:600;
+  display:block;margin-bottom:10px;
+}
+.sec-head h2{font-size:28px;font-weight:800;letter-spacing:.4px;margin-bottom:12px}
+.sec-head p{color:var(--text-dim);font-size:15.5px}
+
+/* ===== 英雄卡片 ===== */
+.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.hero-card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px;transition:.24s;position:relative;overflow:hidden;
+}
+.hero-card::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:3px;
+  background:linear-gradient(180deg,var(--violet),var(--gold));
+  opacity:0;transition:.24s;
+}
+.hero-card:hover{transform:translateY(-4px);border-color:#3d356e;background:#221d40}
+.hero-card:hover::before{opacity:1}
+.hero-card .role{
+  display:inline-block;font-size:12px;padding:3px 10px;border-radius:6px;
+  background:rgba(143,123,240,.15);color:#b9aaf8;border:1px solid rgba(143,123,240,.3);
+  margin-bottom:12px;
+}
+.hero-card h3{font-size:19px;font-weight:700;margin-bottom:8px}
+.hero-card .desc{font-size:14.5px;color:var(--text-dim);margin-bottom:14px}
+.hero-card ul{list-style:none;font-size:14px}
+.hero-card ul li{
+  padding:6px 0 6px 16px;position:relative;color:#c9c4e2;
+  border-bottom:1px solid #262047;
+}
+.hero-card ul li:last-child{border-bottom:none}
+.hero-card ul li::before{
+  content:"";position:absolute;left:0;top:15px;
+  width:6px;height:6px;border-radius:2px;background:var(--gold);transform:rotate(45deg);
+}
+
+/* ===== 定位表格 ===== */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-panel)}
+table{width:100%;border-collapse:collapse;min-width:640px;font-size:14.5px}
+thead th{
+  background:#1f1a3d;color:var(--gold-soft);text-align:left;
+  padding:14px 18px;font-weight:600;font-size:14px;letter-spacing:.5px;
+  border-bottom:1px solid var(--line);white-space:nowrap;
+}
+tbody td{padding:14px 18px;border-bottom:1px solid #241f45;color:#cfcae6;vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#1c1738}
+td.name{color:var(--gold-soft);font-weight:600;white-space:nowrap}
+
+/* ===== 技能解析 ===== */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{
+  background:var(--bg-panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:26px;
+}
+.panel h3{font-size:18px;margin-bottom:14px;color:var(--gold-soft);display:flex;align-items:center;gap:9px}
+.panel h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--violet);display:block}
+.panel p{font-size:14.8px;color:var(--text-dim);margin-bottom:12px}
+.panel p:last-child{margin-bottom:0}
+.panel strong{color:#d8d3f0;font-weight:600}
+
+/* ===== 出装 / 思路 列表 ===== */
+.steps{list-style:none;counter-reset:s}
+.steps li{
+  counter-increment:s;position:relative;padding:0 0 22px 46px;
+  border-left:1px solid #2a2450;margin-left:14px;
+}
+.steps li:last-child{border-left-color:transparent;padding-bottom:0}
+.steps li::before{
+  content:counter(s);position:absolute;left:-15px;top:-2px;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--bg-card);border:1px solid var(--violet-dim);
+  color:var(--gold);font-size:13.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.steps li h4{font-size:16px;margin-bottom:6px;color:#efeafd}
+.steps li p{font-size:14.5px;color:var(--text-dim)}
+
+/* ===== 入门提示 ===== */
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tip{
+  background:linear-gradient(165deg,#1e1a3a,#15122a);
+  border:1px solid var(--line);border-radius:var(--radius);padding:22px;
+}
+.tip .ico{
+  width:38px;height:38px;border-radius:10px;margin-bottom:14px;
+  background:rgba(232,196,106,.12);border:1px solid rgba(232,196,106,.32);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-weight:800;font-size:16px;
+}
+.tip h3{font-size:16.5px;margin-bottom:8px}
+.tip p{font-size:14.3px;color:var(--text-dim)}
+
+/* ===== FAQ ===== */
+.faq{display:flex;flex-direction:column;gap:12px}
+.faq details{
+  background:var(--bg-panel);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;
+}
+.faq details[open]{border-color:#3d356e;background:#1a1636}
+.faq summary{
+  cursor:pointer;padding:17px 22px;font-size:15.5px;font-weight:600;
+  color:#e5e1f7;list-style:none;display:flex;justify-content:space-between;gap:14px;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"+";color:var(--gold);font-size:20px;font-weight:400;line-height:1;
+  transition:.2s;
+}
+.faq details[open] summary::after{content:"–"}
+.faq .ans{padding:0 22px 20px;font-size:14.6px;color:var(--text-dim)}
+
+/* ===== 侧栏/相关 ===== */
+.related{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.rel-item{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:12px;
+  padding:18px;transition:.22s;
+}
+.rel-item:hover{border-color:var(--violet-dim);transform:translateY(-3px)}
+.rel-item h4{font-size:15.5px;margin-bottom:7px;color:#e8e4fa}
+.rel-item p{font-size:13.6px;color:var(--text-dim)}
+
+/* ===== 页脚 ===== */
+footer{
+  background:#0a0917;border-top:1px solid var(--line);
+  padding:46px 0 30px;margin-top:20px;
+}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px;margin-bottom:34px}
+.foot-grid h4{font-size:15px;margin-bottom:14px;color:var(--gold-soft)}
+.foot-grid p{font-size:13.8px;color:#8f89b0;max-width:320px}
+.foot-grid ul{list-style:none}
+.foot-grid ul li{margin-bottom:9px}
+.foot-grid ul li a{font-size:13.8px;color:#8f89b0;transition:.2s}
+.foot-grid ul li a:hover{color:var(--gold)}
+.foot-bottom{
+  border-top:1px solid #1e1a3a;padding-top:22px;
+  font-size:13px;color:#6f6a8d;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width:980px){
+  .hero-inner{grid-template-columns:1fr;gap:34px;padding:48px 0 44px}
+  .hero h1{font-size:33px}
+  .hero-grid{grid-template-columns:repeat(2,1fr)}
+  .tips{grid-template-columns:repeat(2,1fr)}
+  .related{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:720px){
+  .nav{display:none}
+  .nav.open{
+    display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;
+    background:#15122a;border-bottom:1px solid var(--line);padding:12px 20px 18px;gap:2px;
+  }
+  .nav.open a{padding:10px 8px}
+  .menu-btn{display:block}
+  .topbar-inner{position:relative}
+  .hero h1{font-size:27px}
+  section{padding:48px 0}
+  .sec-head h2{font-size:23px}
+  .hero-grid,.split,.tips,.related{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .foot-bottom{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="logo">
+      <span class="mark">幻</span>
+      <span>幻梦之晓<span class="sub">2.2英雄</span></span>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#overview" class="on">版本概览</a>
+      <a href="#heroes">英雄资料</a>
+      <a href="#roles">定位对照</a>
+      <a href="#skills">技能解析</a>
+      <a href="#build">出装思路</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="展开导航">菜单</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- 首屏 -->
+  <section class="hero" id="overview">
+    <div class="wrap hero-inner">
+      <div>
+        <span class="hero-tag"><i></i>幻梦之晓 2.2 版本英雄资料整理</span>
+        <h1>幻梦之晓2.2英雄<em>资料与玩法指南</em></h1>
+        <p class="lead">
+          幻梦之晓2.2英雄是当前版本玩家最常查阅的内容之一。本页把版本英雄按定位、技能机制、对线节奏和出装方向做了系统梳理，
+          无论你是刚接触这个版本，还是想换一个英雄重新上手，都可以先在这里找到清晰的方向，再进入实战验证。
+        </p>
+        <div class="hero-actions">
+          <a href="#heroes" class="btn btn-primary">查看英雄资料</a>
+          <a href="#build" class="btn btn-ghost">阅读出装思路</a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <h2>版本速览</h2>
+        <div class="stat-row"><span>版本号</span><span>2.2</span></div>
+        <div class="stat-row"><span>核心变化</span><span>英雄数值与技能手感调整</span></div>
+        <div class="stat-row"><span>常见定位</span><span>输出 / 前排 / 辅助 / 游走</span></div>
+        <div class="stat-row"><span>上手难度</span><span>由低到高分布</span></div>
+        <div class="stat-row"><span>适合人群</span><span>新手与回归玩家</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 英雄资料 -->
+  <section id="heroes">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">HERO INDEX</span>
+        <h2>2.2 版本英雄分类速查</h2>
+        <p>
+          不同英雄在幻梦之晓2.2中的强度表现，往往取决于技能衔接是否顺畅、装备成型速度以及队伍阵容的配合程度。
+          下面按常见定位分组，帮助你快速锁定适合自己的方向。
+        </p>
+      </div>
+      <div class="hero-grid">
+
+        <article class="hero-card">
+          <span class="role">核心输出</span>
+          <h3>高爆发型英雄</h3>
+          <p class="desc">依靠技能连招在短时间内打出高额伤害，适合喜欢主动进攻、节奏感强的玩家。</p>
+          <ul>
+            <li>对线期以消耗和补刀为主</li>
+            <li>中期需抓住装备成型窗口</li>
+            <li>团战注意切入时机与站位</li>
+          </ul>
+        </article>
+
+        <article class="hero-card">
+          <span class="role">持续输出</span>
+          <h3>续航压制型英雄</h3>
+          <p class="desc">输出稳定、容错较高，通过持续消耗建立优势，适合稳健推进的打法。</p>
+          <ul>
+            <li>重视发育节奏与兵线控制</li>
+            <li>装备以攻速与吸血方向为主</li>
+            <li>团战中保持安全输出距离</li>
+          </ul>
+        </article>
+
+        <article class="hero-card">
+          <span class="role">前排坦克</span>
+          <h3>开团承伤型英雄</h3>
+          <p class="desc">负责吸收伤害和控制战场，为队友创造输出空间，是阵容中的稳定支点。</p>
+          <ul>
+            <li>优先堆叠防御与生命属性</li>
+            <li>把握先手开团的时机</li>
+            <li>保护后排与分割战场并重</li>
+          </ul>
+        </article>
+
+        <article class="hero-card">
+          <span class="role">辅助支援</span>
+          <h3>控制增益型英雄</h3>
+          <p class="desc">以控制和增益技能为核心，帮助队友扩大优势，对意识与视野要求较高。</p>
+          <ul>
+            <li>前期配合打野建立节奏</li>
+            <li>技能释放讲究预判与衔接</li>
+            <li>团战优先保护核心输出</li>
+          </ul>
+        </article>
+
+        <article class="hero-card">
+          <span class="role">游走刺客</span>
+          <h3>机动突进型英雄</h3>
+          <p class="desc">依靠位移与爆发对敌方后排造成威胁，操作上限高，需要较好的地图意识。</p>
+          <ul>
+            <li>前期寻找单杀与支援机会</li>
+            <li>关注敌方关键技能冷却</li>
+            <li>避免无意义的正面消耗</li>
+          </ul>
+        </article>
+
+        <article class="hero-card">
+          <span class="role">远程消耗</span>
+          <h3>手长压制型英雄</h3>
+          <p class="desc">凭借攻击距离和范围技能压制对手，适合喜欢在安全位置影响战局的玩家。</p>
+          <ul>
+            <li>利用距离差进行消耗</li>
+            <li>注意被近身后的自保手段</li>
+            <li>团战站位尽量靠后</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 定位对照 -->
+  <section id="roles" style="background:#100e20;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">ROLE MATCH</span>
+        <h2>英雄定位与打法对照</h2>
+        <p>下表按常见定位整理英雄的职责、强势阶段与操作要点，方便你根据队伍需求选择合适角色。</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>定位类型</th>
+              <th>主要职责</th>
+              <th>强势阶段</th>
+              <th>操作要点</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="name">核心输出</td>
+              <td>承担主要伤害，快速击杀敌方关键目标</td>
+              <td>中期装备成型后</td>
+              <td>控制进场时机，避免先手被集火</td>
+            </tr>
+            <tr>
+              <td class="name">持续输出</td>
+              <td>稳定消耗，推进兵线与防御塔</td>
+              <td>中后期</td>
+              <td>保持输出距离，注意走位与技能衔接</td>
+            </tr>
+            <tr>
+              <td class="name">前排坦克</td>
+              <td>吸收伤害、开团与控制战场</td>
+              <td>前中期至团战期</td>
+              <td>判断开团时机，兼顾保护后排</td>
+            </tr>
+            <tr>
+              <td class="name">辅助支援</td>
+              <td>提供控制、增益与视野支持</td>
+              <td>全期</td>
+              <td>跟紧核心队友，技能留给关键目标</td>
+            </tr>
+            <tr>
+              <td class="name">游走刺客</td>
+              <td>切入后排，制造局部人数优势</td>
+              <td>前期与中期</td>
+              <td>观察小地图，避开敌方控制技能</td>
+            </tr>
+            <tr>
+              <td class="name">远程消耗</td>
+              <td>远程压制，限制敌方走位空间</td>
+              <td>前中期对线期</td>
+              <td>利用射程优势，随时准备后撤</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能解析 -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">SKILL BREAKDOWN</span>
+        <h2>技能机制与实战理解</h2>
+        <p>理解技能的实际作用范围与释放节奏，往往比单纯记忆数值更重要。以下从通用角度说明常见技能类型的用法。</p>
+      </div>
+      <div class="split">
+        <div class="panel">
+          <h3><span class="dot"></span>主动技能：释放时机决定收益</h3>
+          <p>
+            多数英雄的主动技能都带有明确的<strong>冷却时间与消耗成本</strong>。在对线期，技能更多用于补刀、消耗和逼退对手；
+            进入团战后，技能应尽量留给关键目标，而不是随意丢出。
+          </p>
+          <p>
+            建议先在对局外熟悉技能前摇、作用范围和弹道速度，再在实战中练习衔接顺序。技能命中率提升后，
+            同样的装备也能打出更稳定的效果。
+          </p>
+        </div>
+        <div class="panel">
+          <h3><span class="dot"></span>被动与增益：容易被忽略的强度来源</h3>
+          <p>
+            不少英雄的被动效果会随等级或装备提升而增强，例如<strong>叠加层数、触发额外伤害或提供回复</strong>。
+            这些效果往往不显眼，却直接影响对拼结果。
+          </p>
+          <p>
+            阅读英雄说明时，建议重点关注触发条件与叠加上限，并思考在什么场景下能够稳定触发，
+            这样才能判断该英雄是否适合当前阵容。
+          </p>
+        </div>
+        <div class="panel">
+          <h3><span class="dot"></span>位移与控制：决定生死的关键</h3>
+          <p>
+            位移技能既是进攻手段，也是保命手段。贸然用位移进场却无法撤离，是新手最常见的失误之一。
+            建议在使用前先确认<strong>撤退路线与队友位置</strong>。
+          </p>
+          <p>
+            控制技能的价值在于命中关键目标。与其追求命中数量，不如优先限制敌方输出位，
+            为队友创造安全的输出环境。
+          </p>
+        </div>
+        <div class="panel">
+          <h3><span class="dot"></span>技能连招：从固定顺序到灵活应变</h3>
+          <p>
+            固定连招适合入门阶段建立手感，但实战中对手不会站在原地。更实用的做法是记住
+            <strong>核心技能的先后逻辑</strong>，例如先用控制限制走位，再用输出技能收尾。
+          </p>
+          <p>
+            当对手拥有解控或位移能力时，可以适当保留关键技能，等对方交出保命手段后再进行压制。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 出装思路 -->
+  <section id="build" style="background:#100e20;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">BUILD &amp; RHYTHM</span>
+        <h2>出装方向与对局节奏</h2>
+        <p>装备选择需要结合对手阵容与自身定位，以下思路可作为参考框架，具体搭配仍需根据对局情况调整。</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <h4>明确核心属性需求</h4>
+          <p>先判断英雄最依赖的属性，例如攻击力、法术强度、攻速、防御或冷却缩减，再围绕核心属性选择装备方向，避免属性分散导致成型缓慢。</p>
+        </li>
+        <li>
+          <h4>根据对手阵容调整防御装</h4>
+          <p>当对方物理输出较多时，优先考虑护甲与减伤；面对法术伤害集中的阵容，则适当补充魔抗与生命值，提高团战存活能力。</p>
+        </li>
+        <li>
+          <h4>把握装备成型的关键节点</h4>
+          <p>多数英雄在完成第一件核心装备后战力明显提升，此时可以主动寻找小规模团战或推进机会，但不宜在装备尚未成型时强行开战。</p>
+        </li>
+        <li>
+          <h4>顺风与逆风的取舍</h4>
+          <p>顺风局可以适当追求输出上限，扩大优势；逆风局则建议优先生存与清线能力，稳住防线再寻找反击机会。</p>
+        </li>
+        <li>
+          <h4>用实战复盘验证思路</h4>
+          <p>每局结束后回顾伤害构成、死亡原因与关键团战表现，比单纯照搬固定出装更容易形成自己的理解。</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 入门提示 -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">START GUIDE</span>
+        <h2>新手上手建议</h2>
+        <p>如果你刚接触幻梦之晓2.2英雄，可以从以下三个方面入手，减少试错成本。</p>
+      </div>
+      <div class="tips">
+        <div class="tip">
+          <div class="ico">1</div>
+          <h3>先选简单定位</h3>
+          <p>优先尝试技能逻辑直观、容错较高的英雄，例如前排坦克或持续输出型角色，熟悉地图与节奏后再挑战高操作英雄。</p>
+        </div>
+        <div class="tip">
+          <div class="ico">2</div>
+          <h3>固定一套连招</h3>
+          <p>先把一套基础连招练到熟练，形成肌肉记忆，再根据对手反应逐步加入变化，避免一开始就追求复杂操作。</p>
+        </div>
+        <div class="tip">
+          <div class="ico">3</div>
+          <h3>关注小地图</h3>
+          <p>多数失误来自信息不足。养成定期查看小地图的习惯，能明显降低被偷袭的概率，也更容易抓住支援机会。</p>
+        </div>
+        <div class="tip">
+          <div class="ico">4</div>
+          <h3>控制对拼欲望</h3>
+          <p>血量与技能不占优势时，稳住发育比强行对拼更划算。耐心等待装备与等级优势，往往能获得更好的结果。</p>
+        </div>
+        <div class="tip">
+          <div class="ico">5</div>
+          <h3>配合队友节奏</h3>
+          <p>团队类玩法中，个人发育与团队目标需要平衡。适当参与团战和资源争夺，比单独发育更容易带来胜利。</p>
+        </div>
+        <div class="tip">
+          <div class="ico">6</div>
+          <h3>复盘比堆场次更有效</h3>
+          <p>每局结束后简单回顾关键失误，比盲目增加对局数量更能提升水平。记录问题，下一局有针对性地改进。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="background:#100e20;border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">FAQ</span>
+        <h2>关于幻梦之晓2.2英雄的常见问题</h2>
+        <p>以下问题来自玩家在查找版本英雄资料时最常关注的方向，答案以通用思路为主，具体效果请以游戏内实际表现为准。</p>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>幻梦之晓2.2英雄和之前版本有什么区别？</summary>
+          <div class="ans">
+            2.2 版本通常会对部分英雄的技能数值、手感或装备适配进行调整，从而影响英雄的强度排序与出场率。
+            建议以游戏内更新说明为准，本页提供的是通用理解与打法框架，帮助你在版本变化后快速重新上手。
+          </div>
+        </details>
+        <details>
+          <summary>新手应该优先练哪一类英雄？</summary>
+          <div class="ans">
+            建议从技能逻辑简单、容错较高的定位开始，例如前排坦克或持续输出型英雄。这类角色即使操作不够精细，
+            也能通过站位和装备发挥作用，适合在熟悉地图与节奏的阶段使用。
+          </div>
+        </details>
+        <details>
+          <summary>英雄出装是固定的吗？</summary>
+          <div class="ans">
+            不是。出装需要根据对手阵容、对局节奏和自身定位灵活调整。固定出装可以作为入门参考，
+            但实战中更建议根据对方主要伤害类型和关键英雄特点进行针对性选择。
+          </div>
+        </details>
+        <details>
+          <summary>技能连招需要背下来吗？</summary>
+          <div class="ans">
+            入门阶段记住一套基础连招有助于建立手感，但不必死记。实战中对手的走位和反应会不断变化，
+            更重要的是理解每个技能的作用与先后逻辑，再根据情况灵活组合。
+          </div>
+        </details>
+        <details>
+          <summary>如何判断一个英雄是否适合当前阵容？</summary>
+          <div class="ans">
+            可以从队伍缺少什么能力来考虑：是否缺少前排承伤、是否缺少控制、是否缺少持续输出。
+            选择能补齐队伍短板的英雄，通常比单纯追求个人喜好更容易取得优势。
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 相关阅读 -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">RELATED</span>
+        <h2>相关阅读方向</h2>
+        <p>除了英雄本身，以下内容也常被玩家一并查阅，可作为进一步了解的入口。</p>
+      </div>
+      <div class="related">
+        <a class="rel-item" href="#roles">
+          <h4>定位与阵容搭配</h4>
+          <p>了解不同定位在队伍中的职责，以及如何根据阵容选择英雄。</p>
+        </a>
+        <a class="rel-item" href="#skills">
+          <h4>技能机制详解</h4>
+          <p>从技能类型出发，理解释放时机、连招逻辑与常见误区。</p>
+        </a>
+        <a class="rel-item" href="#build">
+          <h4>出装与节奏</h4>
+          <p>围绕核心属性与对局阶段，梳理装备选择的基本思路。</p>
+        </a>
+        <a class="rel-item" href="#faq">
+          <h4>常见问题汇总</h4>
+          <p>集中解答版本差异、上手难度与实战判断等高频疑问。</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>幻梦之晓2.2英雄</h4>
+        <p>整理幻梦之晓2.2版本英雄的定位、技能机制、出装方向与对局节奏，为玩家提供清晰可查的参考资料。</p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <ul>
+          <li><a href="#overview">版本概览</a></li>
+          <li><a href="#heroes">英雄资料</a></li>
+          <li><a href="#roles">定位对照</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>玩法参考</h4>
+        <ul>
+          <li><a href="#skills">技能解析</a></li>
+          <li><a href="#build">出装思路</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>说明</h4>
+        <ul>
+          <li><a href="#overview">内容以通用思路为主</a></li>
+          <li><a href="#faq">实际效果以游戏内为准</a></li>
+          <li><a href="#heroes">建议结合实战验证</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>幻梦之晓2.2英雄资料整理 · 内容仅供参考</span>
+      <span>请以游戏内实际版本说明为准</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn = document.getElementById('menuBtn');
+  var nav = document.getElementById('nav');
+  if(btn && nav){
+    btn.addEventListener('click', function(){
+      nav.classList.toggle('open');
+    });
+    nav.addEventListener('click', function(e){
+      if(e.target.tagName === 'A'){ nav.classList.remove('open'); }
+    });
+  }
+  var links = document.querySelectorAll('.nav a');
+  links.forEach(function(a){
+    a.addEventListener('click', function(){
+      links.forEach(function(x){ x.classList.remove('on'); });
+      a.classList.add('on');
+    });
+  });
+})();
+</script>
+
+</body>
+  </html>
